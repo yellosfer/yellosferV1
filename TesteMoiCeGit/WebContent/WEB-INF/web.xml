@@ -2,7 +2,7 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>Yellosfer</display-name>
   <welcome-file-list>
-    <welcome-file>accueilServlet</welcome-file>
+    <welcome-file>accueil</welcome-file>
   </welcome-file-list>
   <session-config>
     <session-timeout>0</session-timeout>
@@ -14,125 +14,5 @@
   <servlet-mapping>
     <servlet-name>accueil</servlet-name>
     <url-pattern>/accueil</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>visualiserMesVentes</servlet-name>
-    <jsp-file>/WEB-INF/jsp/visualiserMesVentes.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>visualiserMesVentes</servlet-name>
-    <url-pattern>/visualiserMesVentes</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>visualiserMesAchats</servlet-name>
-    <jsp-file>/WEB-INF/jsp/visualiserMesAchats.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>visualiserMesAchats</servlet-name>
-    <url-pattern>/visualiserMesAchats</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>connecterUtilisateur</servlet-name>
-    <jsp-file>/WEB-INF/jsp/connecterUtilisateur.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>connecterUtilisateur</servlet-name>
-    <url-pattern>/connecterUtilisateur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>deconnecterUtilisateur</servlet-name>
-    <jsp-file>/WEB-INF/jsp/accueil.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>deconnecterUtilisateur</servlet-name>
-    <url-pattern>/deconnecterUtilisateur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>inscrireUtilisateur</servlet-name>
-    <jsp-file>/WEB-INF/jsp/inscrireUtilisateur.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>inscrireUtilisateur</servlet-name>
-    <url-pattern>/inscrireUtilisateur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>chercherEnchere</servlet-name>
-    <jsp-file>/WEB-INF/jsp/chercherEnchere.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>chercherEnchere</servlet-name>
-    <url-pattern>/chercherEnchere</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>visualiserAutreProfil</servlet-name>
-    <jsp-file>/WEB-INF/jsp/visualiserAutreProfil.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>visualiserAutreProfil</servlet-name>
-    <url-pattern>/visualiserAutreProfil</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>visualiserMonProfil</servlet-name>
-    <jsp-file>/WEB-INF/jsp/visualiserMonProfil.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>visualiserMonProfil</servlet-name>
-    <url-pattern>/visualiserMonProfil</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>gagnerEnchereAcheteur</servlet-name>
-    <jsp-file>/WEB-INF/jsp/gagnerEnchereAcheteur.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>gagnerEnchereAcheteur</servlet-name>
-    <url-pattern>/gagnerEnchereAcheteur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>gagnerEnchereVendeur</servlet-name>
-    <jsp-file>/WEB-INF/jsp/gagnerEnchereVendeur.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>gagnerEnchereVendeur</servlet-name>
-    <url-pattern>/gagnerEnchereVendeur</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>modifierEnchere</servlet-name>
-    <jsp-file>/WEB-INF/jsp/modifierEnchere.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>modifierEnchere</servlet-name>
-    <url-pattern>/modifierEnchere</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>modifierProfil</servlet-name>
-    <jsp-file>/WEB-INF/jsp/modifierProfil.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>modifierProfil</servlet-name>
-    <url-pattern>/modifierProfil</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>visualiserDetailEnchere</servlet-name>
-    <jsp-file>/WEB-INF/jsp/visualiserDetailEnchere.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>visualiserDetailEnchere</servlet-name>
-    <url-pattern>/visualiserDetailEnchere</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>creerEnchere</servlet-name>
-    <jsp-file>/WEB-INF/jsp/creerEnchere.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>creerEnchere</servlet-name>
-    <url-pattern>/creerEnchere</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>modifierMotDePasse</servlet-name>
-    <jsp-file>/WEB-INF/jsp/modifierMotDePasse.jsp</jsp-file>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>modifierMotDePasse</servlet-name>
-    <url-pattern>/modifierMotDePasse</url-pattern>
   </servlet-mapping>
 </web-app>
