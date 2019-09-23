@@ -6,9 +6,9 @@
 		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
 		type="javax.sql.DataSource"
 		
-		url="jdbc:sqlserver://10.12.200.6:1433;databasename=ENCHERES"
+		url="jdbc:sqlserver://10.12.200.6:1433;databasename=YELLOSFER"
 			
-		username="sa"
+		username="yellosfer"
 		password="Pa$$w0rd"
 		
 		maxTotal="100"
