@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+:root{
+--main-bg-color: #FFFBCA;
+--main-text-color: ;
+--main-title-color: #FDC73D;
+
+--main-link-bg-color: #F6F5F3;
+--main-link-text-color: #FDC73D;
+
+--main-link-hover-bg-color: #FDC73D;
+--main-link-hover-text-color: #F6F5F3;
+
+--main-link-focused-bg-color: #FDC73D;
+--main-link-focused-text-color: #F6F5F3;
+
+
+	
+}
+
+/* Mise en forme du header 
+#header {
+	background: #ff5245;
+	font-weight: bold;
+	overflow: hidden;
+	-moz-box-shadow: 0px 1px 2px #B5B5B5;
+	-webkit-box-shadow: 0px 1px 2px #B5B5B5;
+	box-shadow: 0px 1px 2px #B5B5B5;
+}
+
+.logo{
+ 	   max-height: 100%;
+      height: 100%;
+      width: 200px;
+  	  -o-object-fit: contain;
+      object-fit: contain;
+	
+}
+
+.navbar{
+	padding:0px;
+}
+.container {
+	min-width: 75%;
+}*/
+
+body {
+	background-color: var(--main-bg-color);
+	/*background-image: url("../img/motif_background_jaune.png");*/
+	font-family: 'Roboto', sans-serif;
+	font-size: 13px;
+
+	-webkit-font-smoothing: antialiased; /* This needs to be set or some font faced fonts look bold on Mac in Chrome/Webkit based browsers. */
+	-moz-osx-font-smoothing: grayscale; /* Fixes font bold issue in Firefox version 25+ on Mac */
+
+}
+
+/* Mise en forme des notes -- A REVOIR -- */
+.card {
+	/*background: #FEFCF7;*/
+	border: none;
+	min-height: 400px;
+	max-height: 400px;
+	overflow: hidden;
+	-moz-box-shadow: 0px 1px 2px #B5B5B5;
+	-webkit-box-shadow: 0px 1px 2px #B5B5B5;
+	box-shadow: 0px 1px 2px #B5B5B5;
+}
+
+.card-img-top {
+	padding-top: 7px;
+	padding-left: 7px;
+	padding-right: 7px;
+}
+
+h6 {
+	font-weight: bold;
+	color: var(--main-title-color);
+}
+
+.btn-sq-xs {
+	width: 25px !important;
+	height: 25px !important;
+	margin: 0 auto;
+	padding: 0;
+	display: inline-block;
+	line-height: 25px;
+	text-align: center;
+}
+
+.minibtn {
+	background: var(--main-link-bg-color);
+	color: var(--main-link-text-color);
+	border: none;
+}
+
+.minibtn:hover {
+	background: var(--main-link-hover-bg-color);
+	color: #F6F5F3;
+}
+
+.minibtn:focus {
+	background: var(--main-link-focused-bg-color);
+	color: var(--main-link-text-color);
+	border: none;
+	box-shadow: unset;
+}
+
+.fbkbtn{
+	background: var(--main-link-bg-color);
+	color: var(--main-link-text-color);
+	border: none;
+	
+	max-width: 100px;
+	max-height: 100px;
+	min-width: 100px;
+	min-height: 100px;
+	
+	font-size: 57px;
+	
+}
+
+.fbkbtn:hover {
+	background: var(--main-link-hover-bg-color);
+	color: var(--main-link-hover-text-color);
+}
+
+.fbkbtn:focus {
+	background: var(--main-link-focused-bg-color);
+	color: var(--main-link-focused-text-color);
+	border: none;
+	box-shadow: unset;
+}
+
+.badge {
+	background: var(--main-link-bg-color);
+	color: var(--main-link-text-color);
+}
+
+.profileimg{
+	max-width: 100px;
+}
+
+
+/* DROP ZONE */
+.dropimage {
+  border: 1.2px dashed #CCC;
+  border-radius: 20px;
+  font-family: sans-serif;
+  height: 100px;
+  text-align:center;
+}
+
+.dragoverhighlight{
+	  border: 1.2px dashed #CCC;
+	  	background: var(--main-link-focused-bg-color);
+}
+
+.dropimg{
+	max-width:100%;
+	max-height: 100px;
+	border-radius:20px;
+	}
