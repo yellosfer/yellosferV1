@@ -4,7 +4,7 @@
 
 			<a class="navbar-brand"
 				href="${pageContext.request.contextPath}/accueilServlet"> <img
-				src="images/logoicon.png" alt="" width=30 height=30>LOSNA
+				src="img/LOGO_YELLOSFER_600x300px.png" alt="">
 			</a>
 		</div>
 

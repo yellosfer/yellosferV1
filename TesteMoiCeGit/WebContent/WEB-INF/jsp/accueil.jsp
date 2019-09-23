@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css"
 	href="${pageContext.request.contextPath}/css/accueil.css">
 
-<title>YELLOSFER</title>
+<title>Yellosfer</title>
 </head>
 <body>
 
