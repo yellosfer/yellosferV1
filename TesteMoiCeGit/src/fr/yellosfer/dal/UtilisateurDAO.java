@@ -12,6 +12,5 @@ public interface UtilisateurDAO {
 	public Utilisateur selectById(int id) throws DALException;
 	public void update(Utilisateur utilisateur) throws DALException;
 	public Utilisateur selectByIdentifiant(String pseudo) throws DALException;
-	void updateCredit(int no_utilisateur, int montant) throws DALException;
 	
 }

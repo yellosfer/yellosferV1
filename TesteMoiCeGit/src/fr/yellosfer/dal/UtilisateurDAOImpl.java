@@ -1,7 +1,6 @@
 package fr.yellosfer.dal;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,21 +8,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.eni.javaee.commun.ConnectionProvider;
-import fr.eni.javaee.commun.DAOException;
-import fr.eni.javaee.connexion.dal.UtilisateurDAOJdbcImpl;
-import fr.eni.javaee.encheres.bo.Enchere;
 import fr.yellosfer.bo.Utilisateur;
 
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private final static String SQL_INSERT_UTILISATEUR = "Insert into Encheres values (?,?,?,?,?,?,?,?)";
-	private final static String SQL_SELECT_UTILISATEUR_BYID = "Select * From Encheres WHERE no_enchere=?";
-	private final static String SQL_SELECT_UTILISATEUR_ALL = "Select * From Encheres";
-	private final static String SQL_UPDATE_UTILISATEUR = "Update Encheres SET date_debut_enchere=?,date_fin_enchere=?,"
-			+ "montant_debut_enchere=?,montant_actuel_enchere=?,vente_fini=?,no_utilisateur_vendeur=?,no_utilisateur_acquereur=?,no_article=?"
-			+ " WHERE no_enchere=? ";
-	private final static String DELETE_UTILISATEUR = "Delete from Encheres WHERE no_enchere=?";
+	private final static String SQL_INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS values (?,?,?,?,?,?,?,?,?,?)";
+	private final static String SQL_SELECT_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEUR WHERE idUtilisateur=?";
+	private final static String SQL_SELECT_UTILISATEUR_BY_IDENTIFIANT = "SELECT * FROM UTILISATEUR WHERE pseudoUtilisateur=? OR emailUtilisateur=? ";
+	private final static String SQL_SELECT_UTILISATEUR_ALL = "SELECT * FROM UTILISATEUR";
+	private final static String SQL_UPDATE_UTILISATEUR = "UPDATE UTILISATEUR SET imageUtilisateur=?,pseudoUtilisateur=?,prenomUtilisateur=?,"
+			+ "nomUtilisateur=?,emailUtilisateur=?,mdpUtilisateur=?,dateInscriptionUtilisateur=?,meilleurPositionUtilisateur=?,"
+			+ "nombreAnnonceUtilisateur=?,actifUtilisateur=? WHERE idUtilisateur=?";
+	private final static String SQL_DELETE_UTILISATEUR = "DELETE FROM UTILISATEUR WHERE idUtilisateur=?";
 
 	@Override
 	public void insert(Utilisateur u) throws DALException {
@@ -32,217 +28,118 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_UTILISATEUR, Statement.RETURN_GENERATED_KEYS);
 
-			pstmt.setDate(1, Date.valueOf(u.getDateDebutEnchere()));
-			pstmt.setDate(2, Date.valueOf(u.getDateFinEnchere()));
-			pstmt.setInt(3, en.getMontantDebutEnchere());
-			pstmt.setInt(4, en.getMontantActuelEnchere());
-			pstmt.setBoolean(5, en.isVenteFini());
-			pstmt.setInt(6, en.getUtilisateurVendeur().getNoUtilisateur());
-			pstmt.setInt(7, en.getUtilisateurAcquereur().getNoUtilisateur());
-			pstmt.setInt(8, en.getArticleVendu().getNoArticle());
+			
 			pstmt.executeUpdate();
 
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				en.setNoEnchere(1);
+				
 			}
 		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : insert : " + e.getMessage());
+			throw new DALException("UtilisateurDAOImpl - insert : " + e.getMessage());
 		}
 	}
 
 	@Override
-	public Enchere selectById(int id) throws DAOException {
-		Enchere en = null;
+	public Utilisateur selectById(int id) throws DALException {
+		Utilisateur u = null;
 		try (Connection cnx = ConnectionProvider.getConnection();) {
 
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_ID);
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_UTILISATEUR_BY_ID);
 			pstmt.setInt(1, id);
 			ResultSet rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				en = enchereBuilder(rs);
+				u = utilisateurBuilder(rs);
 			}
 
 		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : selectById : " + e.getMessage());
+			throw new DALException("UtilisateurDAOImpl - selectById : " + e.getMessage());
 		}
 
-		return en;
+		return u;
 	}
 
+	
 	@Override
-	public List<Enchere> selectAll() throws DAOException {
-		List<Enchere> listeE = new ArrayList<>();
+	public Utilisateur selectByIdentifiant(String pseudo) throws DALException {
+		Utilisateur u = null;
+		try (Connection cnx = ConnectionProvider.getConnection();) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_UTILISATEUR_BY_IDENTIFIANT);
+			pstmt.setString(1, pseudo);
+			pstmt.setString(2, pseudo);
+			ResultSet rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				u = utilisateurBuilder(rs);
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("UtilisateurDAOImpl - selectByIdentifiant : " + e.getMessage());
+		}
+
+		return u;
+	}
+	
+	
+	@Override
+	public List<Utilisateur> selectAll() throws DALException {
+		List<Utilisateur> listeU = new ArrayList<>();
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			Statement stmt = cnx.createStatement();
-			ResultSet rs = stmt.executeQuery(SELECT_ENCHERE_ALL);		
+			ResultSet rs = stmt.executeQuery(SQL_SELECT_UTILISATEUR_ALL);		
 
 			while (rs.next()) {
-				Enchere e = enchereBuilder(rs);
-				listeE.add(e);
+				Utilisateur u = utilisateurBuilder(rs);
+				listeU.add(u);
 			}
 
 		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : selectAll : " + e.getMessage());
+			throw new DALException("UtilisateurDAOImpl - selectAll : " + e.getMessage());
 		}
 
-		return listeE;
-	}
-
-	@Override
-	public List<Enchere> selectByCategory(String categorie) throws DAOException {
-		List<Enchere> listeE = new ArrayList<>();
-
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_CATEGORY);
-			
-			pstmt.setString(1, categorie);
-			
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Enchere e = enchereBuilder(rs);
-				listeE.add(e);
-			}
-
-		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : selectAll : " + e.getMessage());
-		}
-
-		return listeE;
-	}
-	
-	@Override
-	public List<Enchere> selectByNomArticle(String nomArticle) throws DAOException {
-		List<Enchere> listeE = new ArrayList<>();
-
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_NOM_ARTICLE);
-			
-			pstmt.setString(1, nomArticle);
-			
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Enchere e = enchereBuilder(rs);
-				listeE.add(e);
-			}
-
-		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : selectAll : " + e.getMessage());
-		}
-
-		return listeE;
-	}
-	
-	@Override
-	public List<Enchere> selectByCategorieAndName(String categorie, String nomArticle) throws DAOException {
-		List<Enchere> listeE = new ArrayList<>();
-
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_ENCHERE_CATEGORY_AND_NAME);
-			
-			pstmt.setString(1, categorie);
-			pstmt.setString(2, nomArticle);
-			
-			ResultSet rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Enchere e = enchereBuilder(rs);
-				listeE.add(e);
-			}
-
-		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : selectAll : " + e.getMessage());
-		}
-
-		return listeE;
+		return listeU;
 	}
 	
 
 	@Override
-	public void delete(int id) throws DAOException {
+	public void delete(int id) throws DALException {
 		
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			
-			PreparedStatement pstmt = cnx.prepareStatement(DELETE_ENCHERE);
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_DELETE_UTILISATEUR);
 			
 			pstmt.setInt(1, id);
-			pstmt.executeQuery(DELETE_ENCHERE);
+			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : delete " + e.getMessage());
+			throw new DALException("UtilisateurDAOImpl - delete " + e.getMessage());
 		}
 	}
 
 	@Override
-	public void update(Enchere en) throws DAOException {
+	public void update(Utilisateur u) throws DALException {
 
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			
-			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ENCHERE);
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_UPDATE_UTILISATEUR);
 
-			pstmt.setDate(1, Date.valueOf(en.getDateDebutEnchere()));
-			pstmt.setDate(2, Date.valueOf(en.getDateFinEnchere()));
-			pstmt.setInt(3, en.getMontantDebutEnchere());
-			pstmt.setInt(4, en.getMontantActuelEnchere());
-			pstmt.setBoolean(5, en.isVenteFini());
-			pstmt.setInt(6, en.getUtilisateurVendeur().getNoUtilisateur());
-			pstmt.setInt(7, en.getUtilisateurAcquereur().getNoUtilisateur());
-			pstmt.setInt(8, en.getArticleVendu().getNoArticle());
-			pstmt.setInt(9, en.getNoEnchere());
+			
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : update : " + e.getMessage());
+			throw new DALException("UtilisateurDAOImpl - update : " + e.getMessage());
 		}
 	}
 	
-	@Override
-	public void updateSansConnexion(Enchere en, Connection cnx) throws DAOException {
 
-		try {
-			
-			PreparedStatement pstmt = cnx.prepareStatement(UPDATE_ENCHERE);
+	public Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
+		Utilisateur u = new Utilisateur();
 
-			pstmt.setDate(1, Date.valueOf(en.getDateDebutEnchere()));
-			pstmt.setDate(2, Date.valueOf(en.getDateFinEnchere()));
-			pstmt.setInt(3, en.getMontantDebutEnchere());
-			pstmt.setInt(4, en.getMontantActuelEnchere());
-			pstmt.setBoolean(5, en.isVenteFini());
-			pstmt.setInt(6, en.getUtilisateurVendeur().getNoUtilisateur());
-			pstmt.setInt(7, en.getUtilisateurAcquereur().getNoUtilisateur());
-			pstmt.setInt(8, en.getArticleVendu().getNoArticle());
-			pstmt.setInt(9, en.getNoEnchere());
-			pstmt.executeUpdate();
-
-		} catch (SQLException e) {
-			throw new DAOException("EnchereDAOJdbcImpl : update : " + e.getMessage());
-		}
-	}
-
-	public Enchere enchereBuilder(ResultSet rs) throws SQLException, DAOException {
-		Enchere e = new Enchere();
-		UtilisateurDAOJdbcImpl u = new UtilisateurDAOJdbcImpl();
-		ArticleVenduDAOJdbcImpl a = new ArticleVenduDAOJdbcImpl();
-
-		e.setNoEnchere(rs.getInt("no_enchere"));
-		e.setDateDebutEnchere(rs.getDate("date_debut_enchere").toLocalDate());
-		e.setDateFinEnchere(rs.getDate("date_fin_enchere").toLocalDate());
-		e.setMontantDebutEnchere(rs.getInt("montant_debut_enchere"));
-		e.setMontantActuelEnchere(rs.getInt("montant_actuel_enchere"));
-		e.setVenteFini(rs.getBoolean("vente_fini"));
-		e.setUtilisateurVendeur(u.selectById(rs.getInt("no_utilisateur_vendeur")));
-		e.setUtilisateurAcquereur(u.selectById(rs.getInt("no_utilisateur_acquereur")));
-		e.setArticleVendu(a.selectById(rs.getInt("no_article")));
-
-		return e;
+		return u;
 	}
 	
 }
