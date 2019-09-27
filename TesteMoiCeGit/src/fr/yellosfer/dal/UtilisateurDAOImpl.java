@@ -1,6 +1,7 @@
 package fr.yellosfer.dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,13 +28,22 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_UTILISATEUR, Statement.RETURN_GENERATED_KEYS);
-
+			pstmt.setString(1, u.getImageUtilisateur());
+			pstmt.setString(2, u.getPseudoUtilisateur());
+			pstmt.setString(3, u.getPrenomUtilisateur());
+			pstmt.setString(4, u.getNomUtilisateur());
+			pstmt.setString(5, u.getEmailUtilisateur());
+			pstmt.setString(6, u.getMdpUtilisateur());
+			pstmt.setDate(7, Date.valueOf(u.getDateInscriptionUtilisateur().toString()));
+			pstmt.setInt(8, u.getMeilleurPositionUtilisateur());
+			pstmt.setInt(9, u.getNombreAnnonceUtilisateur());
+			pstmt.setBoolean(10, u.isActifUtilisateur());
 			
 			pstmt.executeUpdate();
 
 			ResultSet rs = pstmt.getGeneratedKeys();
 			if (rs.next()) {
-				
+				u.setIdUtilisateur(rs.getInt(1));
 			}
 		} catch (SQLException e) {
 			throw new DALException("UtilisateurDAOImpl - insert : " + e.getMessage());
