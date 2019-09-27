@@ -136,7 +136,17 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_UPDATE_UTILISATEUR);
-
+			pstmt.setString(1, u.getImageUtilisateur());
+			pstmt.setString(2, u.getPseudoUtilisateur());
+			pstmt.setString(3, u.getPrenomUtilisateur());
+			pstmt.setString(4, u.getNomUtilisateur());
+			pstmt.setString(5, u.getEmailUtilisateur());
+			pstmt.setString(6, u.getMdpUtilisateur());
+			pstmt.setDate(7, Date.valueOf(u.getDateInscriptionUtilisateur().toString()));
+			pstmt.setInt(8, u.getMeilleurPositionUtilisateur());
+			pstmt.setInt(9, u.getNombreAnnonceUtilisateur());
+			pstmt.setBoolean(10, u.isActifUtilisateur());
+			pstmt.setInt(11, u.getIdUtilisateur());
 			
 			pstmt.executeUpdate();
 
@@ -148,6 +158,18 @@ public class UtilisateurDAOImpl implements UtilisateurDAO {
 
 	public Utilisateur utilisateurBuilder(ResultSet rs) throws SQLException {
 		Utilisateur u = new Utilisateur();
+		
+		u.setIdUtilisateur(rs.getInt("idUtilisateur"));
+		u.setImageUtilisateur(rs.getString("imageUtilisateur"));
+		u.setPseudoUtilisateur(rs.getString("pseudoUtilisateur"));
+		u.setPrenomUtilisateur(rs.getString("prenomUtilisateur"));
+		u.setNomUtilisateur(rs.getString("nomUtilisateur"));
+		u.setEmailUtilisateur(rs.getString("emailUtilisateur"));
+		u.setMdpUtilisateur(rs.getString("mdpUtilisateur"));
+		u.setDateInscriptionUtilisateur(rs.getDate("dateInscriptionUtilisateur").toLocalDate());
+		u.setMeilleurPositionUtilisateur(rs.getInt("meilleurPositionUtilisateur"));
+		u.setNombreAnnonceUtilisateur(rs.getInt("nombreAnnonceUtilisateur"));
+		u.setActifUtilisateur(rs.getBoolean("actifUtilisateur"));
 
 		return u;
 	}
