@@ -13,7 +13,7 @@ import fr.yellosfer.bo.Utilisateur;
 
 public class UtilisateurDAOImpl implements UtilisateurDAO {
 
-	private final static String SQL_INSERT_UTILISATEUR = "INSERT INTO UTILISATEURS values (?,?,?,?,?,?,?,?,?,?)";
+	private final static String SQL_INSERT_UTILISATEUR = "INSERT INTO UTILISATEUR values (?,?,?,?,?,?,?,?,?,?)";
 	private final static String SQL_SELECT_UTILISATEUR_BY_ID = "SELECT * FROM UTILISATEUR WHERE idUtilisateur=?";
 	private final static String SQL_SELECT_UTILISATEUR_BY_IDENTIFIANT = "SELECT * FROM UTILISATEUR WHERE pseudoUtilisateur=? OR emailUtilisateur=? ";
 	private final static String SQL_SELECT_UTILISATEUR_ALL = "SELECT * FROM UTILISATEUR";
